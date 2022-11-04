@@ -1,4 +1,5 @@
 import {keyEventToString,getDefaultKeyString} from "./keycodes.js"
+import {getJson,getJson1,getJson2,setHeaders} from "../utils/request.js"
 // shortcut for the website www.fone.risen.com
 
 function throttle(fn, gapTime) {
@@ -58,7 +59,19 @@ document.addEventListener('keydown', function(evt) {
 		})()
 	}
 }, false);
+//test for inject script to weg page
 
+var s = document.createElement('script');
+s.src = chrome.runtime.getURL('inject.js');
+s.onload = function() {
+    this.remove();
+};
+(document.head || document.documentElement).appendChild(s);
+var risen = document.createElement("div")
+risen.innerText = "risen"
+risen.id = "risen"
+
+document.body.appendChild(risen)
 
 
 

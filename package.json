@@ -16,11 +16,12 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && echo 111",
     "preview": "vite preview",
     "fmt": "prettier --write '**/*.{vue,js,json,css,scss,md}'"
   },
   "dependencies": {
+    "jquery": "^3.6.0",
     "vue": "^3.2.37"
   },
   "devDependencies": {

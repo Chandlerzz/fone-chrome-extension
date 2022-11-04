@@ -32,8 +32,11 @@ export default defineManifest({
   ],
   web_accessible_resources: [
     {
-      resources: ['img/logo-16.png', 'img/logo-34.png', 'img/logo-48.png', 'img/logo-128.png'],
-      matches: [],
+      resources: ['img/logo-16.png', 'img/logo-34.png', 'img/logo-48.png', 'img/logo-128.png',"inject.js"],
+      matches: [
+        "https://fone.risen.com/*",
+        "http://10.10.9.27:8080/*",
+      ],
     },
   ],
   permissions: [
