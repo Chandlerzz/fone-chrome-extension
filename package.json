@@ -16,18 +16,21 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build && echo 111",
+    "build": "vite build",
     "preview": "vite preview",
     "fmt": "prettier --write '**/*.{vue,js,json,css,scss,md}'"
   },
   "dependencies": {
     "jquery": "^3.6.0",
+    "element-plus": "^2.2.6",
+    "@element-plus/icons-vue": "^2.0.4",
     "vue": "^3.2.37"
   },
   "devDependencies": {
     "@crxjs/vite-plugin": "^1.0.12",
     "@vitejs/plugin-vue": "^2.3.3",
     "prettier": "^2.7.1",
+    "sass": "^1.52.3",
     "vite": "^2.9.13"
   }
 }

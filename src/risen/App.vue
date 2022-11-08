@@ -1,55 +1,63 @@
 <script setup>
-import ball from "../risen/components/rollingball/index.vue"
+import {ref} from 'vue'
+import sidebar from './views/sidebar/index.vue'
+import content  from './views/content/index.vue'
+const cont = ref("")
+const list = [
+	{
+		name:"search",
+		label:"搜索"
+	},
+	{
+		name:"batchscript",
+		label:"批量脚本"
+	},
+]
+function clickItem(item){
+	const name = item.currentTarget.getAttribute("name");
+	cont.value = name;
+}
 </script>
 
 <template>
-  <main>
-		<ball></ball>
-  </main>
+  <content :content="cont"></content>
+  <sidebar>
+    <ul>
+		<li @click="clickItem" v-for = "item in list" :name="item.name" :key="item.name">{{item.label}}</li>
+    </ul>
+  </sidebar>
 </template>
 
-<style scoped>
-main {
-  text-align: center;
-  padding: 1em;
-  margin: 0 auto;
-}
-
-h3 {
-  color: #42b983;
-  text-transform: uppercase;
-  font-size: 1.5rem;
-  font-weight: 200;
-  line-height: 1.2rem;
-  margin: 2rem auto;
-}
-
-h6 {
-  font-size: 0.5rem;
-  color: #999999;
-  margin: 0.5rem;
-}
-
-a {
-  font-size: 0.5rem;
-  margin: 0.5rem;
-  color: #cccccc;
-  text-decoration: none;
-}
-
-@media (min-width: 480px) {
-  h3 {
-    max-width: none;
+<style lang="scss" scoped>
+ul {
+  padding-inline-start: 0px;
+  display:grid;
+  gap:5px;
+  li {
+    list-style: none;
+	cursor:pointer;
   }
 }
+</style>
 
-@media (prefers-color-scheme: light) {
-  a:hover {
-    color: #747bff;
-  }
-
-  h6 {
-    color: #333333;
-  }
+<style>
+#risen {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  top: 20px;
+  bottom: 20px;
+}
+.risen-show {
+  display: flex;
+}
+.risen-unshow {
+  display: none;
+}
+.el-table__header{
+  width:100% !important;
+}
+.el-table__body{
+  width:100% !important;
 }
 </style>

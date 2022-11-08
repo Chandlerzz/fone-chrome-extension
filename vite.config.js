@@ -21,7 +21,7 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         input:{
           panel:path.resolve(path.resolve(),"panel.html"),
-          risen:path.resolve(path.resolve(),"risen.html")
+          risen:path.resolve(path.resolve(),"risen.html"),
         },
         output: {
           chunkFileNames: 'assets/chunk-[hash].js',

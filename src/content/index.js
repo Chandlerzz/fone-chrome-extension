@@ -40,6 +40,24 @@ document.addEventListener('keydown', function(evt) {
 			}
 		})()
 	}
+
+  // TODO 开启 | 关闭插件模式
+	if(key === "Control+O")
+	{
+		event.preventDefault();
+		throttle(function(){
+      var risen = document.querySelector("#risen")
+      var classList = risen.classList.toString()
+      if(classList ==="risen-show")
+      {
+        risen.classList = ['risen-unshow']
+      }else{
+        risen.classList = ['risen-show']
+      }
+		})()
+	}
+
+
 	if(evt.code === "Enter")
 	{
 		event.preventDefault();
@@ -64,12 +82,12 @@ document.addEventListener('keydown', function(evt) {
 var s = document.createElement('script');
 s.src = chrome.runtime.getURL('inject.js');
 s.onload = function() {
-    this.remove();
 };
 (document.head || document.documentElement).appendChild(s);
 var risen = document.createElement("div")
 risen.innerText = "risen"
 risen.id = "risen"
+risen.classList =["risen-unshow"]
 
 document.body.appendChild(risen)
 

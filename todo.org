@@ -1,0 +1,6 @@
+* version1
+** 分为左右两个块左边为内容右边为菜单
+** Control-O 为打开和关闭菜单 id risen-menu
+** Control-K 为打开和关闭搜索 id risen-search
+** 将原先币种转换的批量脚本放到插件
+** 开发全局搜索功能
