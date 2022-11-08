@@ -1,5 +1,5 @@
 <template>
-	<div v-loading="loading">
+	<div v-loading="loading" style="background:white">
         <header class="header">
             <span>预算系统</span>
         </header>
@@ -64,31 +64,13 @@ import {periodOptions} from "../../../data/batchscript/periodOptions"
 import { getJson1,setHeaders} from "../../../utils/request"
 import {getCurMonth,getCurYear} from "../../../utils/date"
 import {findScript} from "../../../utils/findScript"
-import { ref,reactive } from 'vue'
+import { ref, inject, reactive } from 'vue'
 import { ElMessage } from 'element-plus'
 // -------------------------------------------------------------------------------------
 //init
+const headers = inject("headers")
+const baseUrl = inject("baseUrl")
 const FContents = ref([]);
-let userInfo = JSON.parse(localStorage.getItem("f_userInfo"))
-userInfo = JSON.parse(userInfo.data)
-const lastSelectedApplication = JSON.parse(localStorage.getItem("f_lastSelectedApplication"))
-const sessionId = JSON.parse(localStorage.getItem("f_sessionId"))
-const authorization = JSON.parse(localStorage.getItem("f_authorization"))
-const origin  = document.location.origin;
-let baseUrl = ""
-if(origin.includes("localhost")){
-	baseUrl = "http://10.10.9.27/"
-}
-baseUrl = document.location.origin === "https://fone.risen.com" ? "https://fone.risen.com:80/" : "http://10.10.9.27/"
-const headers = {
-	"Content-Type": "application/json"
-}
-headers["Ewaresoft-FOne-SessionId"] = sessionId.data;
-headers["Ewaresoft-FOne-GlobalUserId"] = userInfo.user_id;
-headers["Ewaresoft-FOne-ApplicationId"] = lastSelectedApplication._id;
-headers["Ewaresoft-FOne-ApplicationUserId"] = lastSelectedApplication.organization_id;
-headers["Authorization"] = authorization.data;
-		
 const loading = ref(false)
  const period = ref(1)
  const params = reactive({year:getCurYear(),entity:"E01",period:"FR" + getCurMonth()})
