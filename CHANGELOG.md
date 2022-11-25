@@ -12,4 +12,5 @@ Summary
 ## 0.0.0 [2022.11.01]
 
 - feat: initial
-- feat: generator by ![create-chrome-ext](https://www.npmjs.com/package/create-chrome-ext)
+- feat: generator by
+  ![create-chrome-ext](https://www.npmjs.com/package/create-chrome-ext)

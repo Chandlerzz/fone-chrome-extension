@@ -33,6 +33,19 @@
                 />
             </el-select>
             <el-select
+                v-model="params.RFWF"
+                class="m-2"
+                placeholder="Select"
+                @change="changeRFWF"
+            >
+                <el-option
+                    v-for="item in RFWFOptions"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                />
+            </el-select>
+            <el-select
                 v-model="params.entity"
                 class="m-2"
                 placeholder="Select"
@@ -54,41 +67,49 @@
         <Tables :data="tableData" @selectionChange="handleSelectionChange"></Tables>
     </div>
 </template>
-
 <script setup>
-import Tables from "../tables/index.vue"
-import {items} from "../../../data/batchscript/planning01"
-import {yearOptions} from "../../../data/batchscript/yearOptions"
-import {entityOptions} from "../../../data/batchscript/entityOptions"
-import {periodOptions} from "../../../data/batchscript/periodOptions"
-import { getJson1,setHeaders} from "../../../utils/request"
-import {getCurMonth,getCurYear} from "../../../utils/date"
-import {findScript} from "../../../utils/FContents"
-import { ref, inject, reactive,defineEmits } from 'vue'
-import { ElMessage } from 'element-plus'
-// -------------------------------------------------------------------------------------
-//init
-const headers = inject("headers").value
-const baseUrl = inject("baseUrl")
-const FContents = ref([]);
-const loading = ref(false)
+ import Tables from "@batchscript/views/tables/index.vue"
+ import {yearOptions} from "../../../data/batchscript/yearOptions"
+ import {entityOptions} from "../../../data/batchscript/entityOptions"
+ import {periodOptions} from "../../../data/batchscript/periodOptions"
+ import {RFWFOptions} from "../../../data/batchscript/RFWFOptions"
+ import { getJson1,setHeaders} from "../../../utils/request"
+ import {getCurMonth,getCurYear} from "../../../utils/date"
+ import {findScript} from "../../../utils/FContents"
+ import { ref, inject, reactive, computed, defineEmits } from 'vue'
+ import { ElMessage } from 'element-plus'
+ import {useMainStore} from "../../stores/main.js"
+ import {storeToRefs} from "pinia"
+ // -------------------------------------------------------------------------------------
+
+ const store = useMainStore()
+ const {baseUrl,headers} = storeToRefs(store)
+ const FContents = ref([]);
+ const loading = ref(false)
  const period = ref(1)
- const params = reactive({year:getCurYear(),entity:"E01",period:"FR" + getCurMonth()})
+ const params = reactive({year:getCurYear(),entity:"E01",period:"FR" + getCurMonth(),RFWF:"滚动预算"})
  const multipleSelection = ref([])
  const emit = defineEmits(['getHeaders']);
 
  let currentMonth =getCurMonth();
- let tableData =reactive(items);
- tableData.map((item) => {
-     item.year = getCurYear();
-     item.entity="E01";
-     item.period="RF"+ currentMonth;
+ const tableData = computed( () => {
+     const currencyTransformScripts =FContents.value.filter(item => item.name.includes("币种转"))
+     currencyTransformScripts.map(item => {
+         item.year = getCurYear();
+         item.entity="E01";
+         item.period="RF"+ currentMonth;
+     })
+     if(params.RFWF ==="滚动预算"){
+         return currencyTransformScripts.filter(item => item.name.includes("滚动预算"))
+     }else{
+         return currencyTransformScripts.filter(item => !item.name.includes("滚动预算"))
+     }
  })
 
- getJson1(baseUrl+"api/FContent/getFContentsAndFavorites",
+ getJson1(baseUrl.value+"api/FContent/getFContentsAndFavorites",
           "POST",
           {},
-          (request) => {setHeaders(request,headers)},
+          (request) => {setHeaders(request,headers.value)},
           (data) => {
               let  result = JSON.parse(data)
               result = result.data.fContentsOfSharedFolder
@@ -98,23 +119,28 @@ const loading = ref(false)
           },
  )
 
-// -----------------------------------------------------------------------------------
-// function
+ // -----------------------------------------------------------------------------------
+ // function
 
+ function changeRFWF(val){
+     tableData.value.map( (item) => {
+         item.RFWF = val;
+     })
+ }
  function changeYear(val){
-     tableData.map((item) => {
+     tableData.value.map((item) => {
          item.year = val;
      })
  }
 
  function changeEntity(val){
-     tableData.map((item) => {
+     tableData.value.map((item) => {
          item.entity = val;
      })
  }
 
  function changePeriod(val){
-     tableData.map((item) => {
+     tableData.value.map((item) => {
          item.period = val;
      })
  }
@@ -135,15 +161,15 @@ const loading = ref(false)
          let fcontentid = FContents.value.find(el =>el.name === name)
          // 暂时这里设置setTimeout loading不显示
          setTimeout(() => {
-             getJson1( baseUrl +"api/FContent/GetFContent",
+             getJson1( baseUrl.value +"api/FContent/GetFContent",
                        "POST",
                        {
-                           appId:headers['ewaresoft-fone-applicationid'],
-                           userId:headers['ewaresoft-fone-applicationuserid'],
+                           appId:headers.value['ewaresoft-fone-applicationid'],
+                           userId:headers.value['ewaresoft-fone-applicationuserid'],
                            from : "userOpen",
                            _id : fcontentid._id,
                        },
-                       (request) => {setHeaders(request,headers)},
+                       (request) => {setHeaders(request,headers.value)},
                        (data) => {
                            let result = JSON.parse(data)
                            result = result.data.data
@@ -160,8 +186,8 @@ const loading = ref(false)
  }
  async function doOne(fcontentid,fcontent,row){
      let body = {
-         appID:headers['ewaresoft-fone-applicationid'],
-         appUserId:headers['ewaresoft-fone-applicationuserid'],
+         appID:headers.value['ewaresoft-fone-applicationid'],
+         appUserId:headers.value['ewaresoft-fone-applicationuserid'],
          fContentId:fcontentid.fContentId,
          scriptName:fcontentid.name,
      };
@@ -188,12 +214,12 @@ const loading = ref(false)
      scriptText = script + scriptText;
      body.scriptText = scriptText;
      body.taskId ="script_1661826593650";
-     getJson1(baseUrl+"api/Script/ExcuteScriptText"
+     getJson1(baseUrl.value+"api/Script/ExcuteScriptText"
              ,"POST",
               body,
-              (request) => { setHeaders(request,headers);},
+              (request) => { setHeaders(request,headers.value);},
               (data) => {
-                  tableData[row.id].message =data
+                  tableData.value.find(item => item._id === row._id).message =data
                   ElMessage({
                       message:data,
                       type:'success'

@@ -4,3 +4,41 @@
 ** Control-K 为打开和关闭搜索 id risen-search
 ** 将原先币种转换的批量脚本放到插件
 ** 开发全局搜索功能
+* version2
+** 如果 插件为打开状态 icon 为on 反之则为 off
+** menu 页尽量简单 只起到menu的作用
+** 批量脚本通过 menu window.open 打开
+** vue应用读取app的name获取 加载需要的模块 插件的作用是在app的地方
+** 点击icon的时候打开 menu 
+
+
+* version3
+** 币种转化 新出一个版本 新增一个option选项滚动预算和全面预算 完成
+** to beautify the menu page
+** search page
+** 用 python处理 下载下来的文件 还原成树结构 完成 
+*** 删除path的空格 （空格导致无法pipeline）         
+** 下载C业务实现 自动化
+*** how to generageTargetId 
+#+BEGIN_SRC js
+function generateGUID() {
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (e) => {
+    let t = 16 * Math.random() | 0;
+    return ("x" === e ? t : 3 & t | 8).toString(16);
+  });
+}
+
+//taskId : "exportObj_bf8972c4-4149-4035-b4aa-9013e4c58baf"
+
+#+END_SRC
+** 文档系统建立
+
+
+问题 A020305 直接制造成本 没有显示数据
+ 财务预算模型           B010205  A0102            
+ 
+ 生产采购预算模型       A020305 直接制造成本 间件制造成本
+ 查看配置分摊结果
+ C11报表预算/C1106费用分摊结果查看表/C1106_01费用分摊结果表_查看表.json
+
+

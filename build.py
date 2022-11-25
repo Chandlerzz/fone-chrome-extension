@@ -4,6 +4,10 @@ import os
 def remove_upprintable_chars(s):
     """移除所有不可见字符"""
     return ''.join(x for x in s if x.isprintable())
+def cp_background_js_to_build():
+    script = "cp src/background.js build/background.js"
+    os.popen(script)
+
 shellscript = r'rg -oN "[^\"]*(css|js)" build/risen.html'
 manifest = ""
 buffer = os.popen(shellscript)
@@ -13,8 +17,11 @@ assets = [asset[1:] for asset in assets if asset != ""]
 with open("./build/manifest.json", "r") as f:
     manifest = json.load(f)
     manifest["web_accessible_resources"][0]["resources"] = manifest["web_accessible_resources"][0]["resources"] + assets
+    manifest["background"] ={
+        "service_worker" : "background.js",
+        "type": "module",
+    }
 
-    
 with open("./build/manifest.json", "w") as f:
     json.dump(manifest,f,ensure_ascii=False)
 
@@ -23,7 +30,7 @@ buffer = os.popen(shellscript1)
 html = buffer.read()
 
 
-js = r'var html = `' + html + r'`' 
+js = r'var html = `' + html + r'`'
 js = js + "\n" + r'html = html.split("\n")'
 js = js + "\nhtml.forEach(function(item){"
 js = js + "\nlet arr = []"
@@ -39,7 +46,7 @@ js = js + "\nif(arr[3] === 'module'){"
 js = js + "\nrisen.type = arr[3]"
 js = js + "\n}else{"
 js = js + "\nrisen.rel = arr[3]"
-js = js + "\n}" 
+js = js + "\n}"
 js = js + "\nrisen[arr[1]] = chrome.runtime.getURL(arr[2]);"
 js = js + "\n(document.head || document.documentElement).appendChild(risen);"
 
@@ -54,4 +61,4 @@ print(content_script)
 with open("./build/" + content_script, "a") as f:
     f.write(js)
 
-
+cp_background_js_to_build()

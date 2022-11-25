@@ -21,10 +21,12 @@
     "fmt": "prettier --write '**/*.{vue,js,json,css,scss,md}'"
   },
   "dependencies": {
-    "jquery": "^3.6.0",
-    "element-plus": "^2.2.6",
     "@element-plus/icons-vue": "^2.0.4",
-    "vue": "^3.2.37"
+    "element-plus": "^2.2.6",
+    "jquery": "^3.6.0",
+    "pinia": "^2.0.24",
+    "vue": "^3.2.37",
+    "vue-router": "^4.1.6"
   },
   "devDependencies": {
     "@crxjs/vite-plugin": "^1.0.12",
