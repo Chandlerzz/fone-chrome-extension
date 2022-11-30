@@ -18,14 +18,18 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "fmt": "prettier --write '**/*.{vue,js,json,css,scss,md}'"
+    "fmt": "prettier --write '**/*.{vue,js,json,css,scss,md}'",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:serve": "vitepress serve docs"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.0.4",
     "element-plus": "^2.2.6",
     "jquery": "^3.6.0",
     "pinia": "^2.0.24",
-    "vue": "^3.2.37",
+    "vitepress": "^1.0.0-alpha.29",
+    "vue": "^3.2.45",
     "vue-router": "^4.1.6"
   },
   "devDependencies": {

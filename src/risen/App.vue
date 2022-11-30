@@ -1,7 +1,6 @@
 <script setup>
  import { ref, provide,watch } from 'vue'
  import sidebar from './views/sidebar/index.vue'
- import content from './views/content/index.vue'
  import { findScript, findModel, findDataStream, findReport } from '../utils/FContents'
  import { getJson1, setHeaders } from '../utils/request'
  // init headers  baseUrl
@@ -116,7 +115,6 @@
 </script>
 
 <template>
-    <content :content="cont" @getHeaders = "getHeaders"></content>
     <sidebar>
         <ul>
             <li @click="clickItem"
@@ -146,11 +144,7 @@
 
 <style>
  #risen {
-     position: absolute;
-     left: 20px;
-     right: 20px;
-     top: 20px;
-     bottom: 20px;
+
  }
  .risen-show {
      display: flex;
