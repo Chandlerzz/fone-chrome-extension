@@ -1,11 +1,11 @@
 <template>
   <div class="content">
-	  <component :is="useComponent"></component>
+    <component :is="useComponent"></component>
   </div>
 </template>
 <script setup>
-import batchscript from "./batchscript.vue"
-import search from "./search.vue"
+import batchscript from './batchscript.vue'
+import search from './search.vue'
 import { computed } from 'vue'
 const props = defineProps({
   content: {
@@ -14,20 +14,19 @@ const props = defineProps({
   },
 })
 const useComponent = computed(() => {
-	if(props.content === "batchscript" )
-	{
-		return  batchscript;
-	}else if(props.content === "search"){
-		return search;
-	}else {
-		return "";
-	}
+  if (props.content === 'batchscript') {
+    return batchscript
+  } else if (props.content === 'search') {
+    return search
+  } else {
+    return ''
+  }
 })
 </script>
 
 <style scoped>
 .content {
-  z-index:100;
+  z-index: 100;
   flex: 1;
 }
-</style >
+</style>

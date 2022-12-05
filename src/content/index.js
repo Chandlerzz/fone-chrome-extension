@@ -19,6 +19,7 @@ document.addEventListener("keydown", function (evt) {
   var key = keyEventToString(evt);
   if (key === "Control+S") {
     event.preventDefault();
+
     throttle(function () {
       var save = document.querySelector(".save-btn");
       if (save) {
@@ -37,6 +38,8 @@ document.addEventListener("keydown", function (evt) {
   }
 
   if (evt.code === "Enter") {
+    // this functionality will affect other functionality so return it now temporary;
+    return;
     event.preventDefault();
     throttle(function () {
       var confirm = Array.from(document.querySelectorAll(".ant-btn"))

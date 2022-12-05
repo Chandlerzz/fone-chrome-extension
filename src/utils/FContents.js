@@ -1,10 +1,10 @@
 export function findModel(arr, func) {
   for (let item of arr) {
     if (item.children) {
-      findModel(item.children, func);
+      findModel(item.children, func)
     } else {
-      if (item.type === "dimensionModel") {
-        func(item);
+      if (item.type === 'dimensionModel') {
+        func(item)
       }
     }
   }
@@ -13,10 +13,10 @@ export function findModel(arr, func) {
 export function findDataStream(arr, func) {
   for (let item of arr) {
     if (item.children) {
-      findDataStream(item.children, func);
+      findDataStream(item.children, func)
     } else {
-      if (item.type === "dataStream") {
-        func(item);
+      if (item.type === 'dataStream') {
+        func(item)
       }
     }
   }
@@ -25,10 +25,10 @@ export function findDataStream(arr, func) {
 export function findScript(arr, func) {
   for (let item of arr) {
     if (item.children) {
-      findScript(item.children, func);
+      findScript(item.children, func)
     } else {
-      if (item.type === "script") {
-        func(item);
+      if (item.type === 'script') {
+        func(item)
       }
     }
   }
@@ -37,10 +37,10 @@ export function findScript(arr, func) {
 export function findReport(arr, func) {
   for (let item of arr) {
     if (item.children) {
-      findReport(item.children, func);
+      findReport(item.children, func)
     } else {
-      if (item.type === "report") {
-        func(item);
+      if (item.type === 'report') {
+        func(item)
       }
     }
   }

@@ -1,5 +1,5 @@
 <script setup>
-import { ref , onMounted} from 'vue'
+import { ref, onMounted } from 'vue'
 
 //" api
 //"获取 所有目录
@@ -41,26 +41,29 @@ import { ref , onMounted} from 'vue'
 //}
 const headers = ref({})
 chrome.runtime.sendMessage({
-	type: "send-background",
+  type: 'send-background',
 })
 
 onMounted(() => {
-	var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(window.localStorage));
-	var dlAnchorElem = document.getElementById('download');
-	dlAnchorElem.setAttribute("href",     dataStr     );
-	dlAnchorElem.setAttribute("download", "scene.json");
-	dlAnchorElem.click();
+  var dataStr =
+    'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(window.localStorage))
+  var dlAnchorElem = document.getElementById('download')
+  dlAnchorElem.setAttribute('href', dataStr)
+  dlAnchorElem.setAttribute('download', 'scene.json')
+  dlAnchorElem.click()
 })
 </script>
 
 <template>
   <main>
     <h3>panel Page!</h3>
-	<a href="http://www.url.com" id="download" target="_blank"></a>
+    <a href="http://www.url.com" id="download" target="_blank"></a>
 
     <h6>v 0.0.0</h6>
 
-    <a href="https://www.npmjs.com/package/create-chrome-ext" target="_blank">Power by {{ headers }}</a>
+    <a href="https://www.npmjs.com/package/create-chrome-ext" target="_blank"
+      >Power by {{ headers }}</a
+    >
   </main>
 </template>
 

@@ -20,6 +20,9 @@
      function mouseHandler(e) {
          switch (e.type) {
              case 'mousedown':
+                if(e.target.className.includes("dialog-title")){
+                 e.target.addEventListener('click',test)
+                }
                  draggingObj = validateHandler(e) //验证是否为可点击移动区域
                  if (draggingObj != null) {
                      diffX = e.clientX - draggingObj.offsetLeft
@@ -28,7 +31,9 @@
                  break
 
              case 'mousemove':
-                 e.removeEventListener('click',test)
+                if(e.target.className.includes("dialog-title")){
+                   e.target.removeEventListener('click',test)
+                }
                  if (draggingObj) {
                      draggingObj.style.left = e.clientX - diffX + 'px'
                      draggingObj.style.top = e.clientY - diffY + 'px'
@@ -36,7 +41,6 @@
                  break
 
              case 'mouseup':
-                 e.addEventListener('click',test)
                  draggingObj = null
                  diffX = 0
                  diffY = 0

@@ -92,4 +92,4 @@ Dragging(getDraggingDialog).enable()
 .dialog-content {
   padding: 4px;
 }
-</style >
+</style>

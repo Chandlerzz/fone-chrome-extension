@@ -16,8 +16,9 @@
 ** to beautify the menu page
 ** search page
 ** 用 python处理 下载下来的文件 还原成树结构 完成 
-*** 删除path的空格 （空格导致无法pipeline）         
-** 下载C业务实现 自动化
+*** 删除path的空格 （空格导致无法pipeline） 完成        
+*** 需要将模型转化为本地数据主要是业务预算模型，生产采购预算模型,财务预算模型 ,人力预算模型 复制到本地 
+*** 下载C业务实现 自动化
 *** how to generageTargetId 
 #+BEGIN_SRC js
 function generateGUID() {
@@ -31,12 +32,6 @@ function generateGUID() {
 
 #+END_SRC
 ** 文档系统建立
-*** 选择vitepress 
-*** 文档学习
+   文档系统选择docsify
 
-电费收入算表_输入表
-C1107_02
-A0100
-A02010401
-PJZ010407
-锁定币种转化问题 读取币种转化表错了
+

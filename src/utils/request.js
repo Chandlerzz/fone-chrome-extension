@@ -1,19 +1,19 @@
-import jQuery from "jquery";
-window.jQuery = window.$ = jQuery;
+import jQuery from 'jquery'
+window.jQuery = window.$ = jQuery
 
 export function getJson(url, func, isasync = true) {
   $.ajax({
-    type: "Get",
+    type: 'Get',
     url: url,
-    dataType: "json",
+    dataType: 'json',
     async: isasync,
     success: function (data) {
-      func(data);
+      func(data)
     },
     error: function (e) {
-      alert("json not found");
+      alert('json not found')
     },
-  });
+  })
 }
 
 export function getJson1(url, type, body, headerFunc, func, isasync = true) {
@@ -22,25 +22,25 @@ export function getJson1(url, type, body, headerFunc, func, isasync = true) {
     url: url,
     async: isasync,
     beforeSend: function (request) {
-      headerFunc(request);
+      headerFunc(request)
     },
     data: JSON.stringify(body),
     success: function (data) {
-      const d = JSON.parse(data);
+      const d = JSON.parse(data)
       if (d.status === 1031) {
-        document.location.href = "#login";
+        document.location.href = '#login'
       }
-      func(data);
+      func(data)
     },
     error: function () {
-      alert("json not found");
+      alert('json not found')
     },
-  });
+  })
 }
 
 export function setHeaders(request, headers) {
   for (let key in headers) {
-    request.setRequestHeader(key, headers[`${key}`]);
+    request.setRequestHeader(key, headers[`${key}`])
   }
 }
 
@@ -50,14 +50,14 @@ export function getJson2(url, type, body, headerFunc, func, isasync = true) {
     url: url,
     async: isasync,
     beforeSend: function (request) {
-      headerFunc(request);
+      headerFunc(request)
     },
     data: JSON.stringify(body),
     success: function (data) {
-      func(data);
+      func(data)
     },
     error: function () {
-      alert("json not found");
+      alert('json not found')
     },
-  });
+  })
 }

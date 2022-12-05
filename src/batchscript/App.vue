@@ -1,7 +1,6 @@
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 <template>
-  <router-view/>
+  <router-view />
 </template>
 
 <style>
@@ -13,23 +12,23 @@
 </style>
 
 <style>
- #risen {
-     position: absolute;
-     left: 20px;
-     right: 20px;
-     top: 20px;
-     bottom: 20px;
- }
- .risen-show {
-     display: flex;
- }
- .risen-unshow {
-     display: none;
- }
- .el-table__header {
-     width: 100% !important;
- }
- .el-table__body {
-     width: 100% !important;
- }
+#risen {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  top: 20px;
+  bottom: 20px;
+}
+.risen-show {
+  display: flex;
+}
+.risen-unshow {
+  display: none;
+}
+.el-table__header {
+  width: 100% !important;
+}
+.el-table__body {
+  width: 100% !important;
+}
 </style>
