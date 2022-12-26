@@ -20,6 +20,13 @@ const routes = [
     hidden: true,
     component: () => import('@batchscript/views/login/index.vue'),
   },
+  {
+    path:'/duplication',
+    name: 'duplication',
+    hidden: true,
+    component: () => import('@batchscript/views/duplication/index.vue'),
+    
+  }
 ]
 
 export default createRouter({

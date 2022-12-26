@@ -20,7 +20,7 @@
      function mouseHandler(e) {
          switch (e.type) {
              case 'mousedown':
-                if(e.target.className.includes("dialog-title")){
+                if(e.target.className && e.target.className.includes("dialog-title")){
                  e.target.addEventListener('click',test)
                 }
                  draggingObj = validateHandler(e) //验证是否为可点击移动区域
@@ -31,7 +31,7 @@
                  break
 
              case 'mousemove':
-                if(e.target.className.includes("dialog-title")){
+                if(e.target.className && e.target.className.includes("dialog-title")){
                    e.target.removeEventListener('click',test)
                 }
                  if (draggingObj) {

@@ -19,7 +19,7 @@
 *** 删除path的空格 （空格导致无法pipeline） 完成        
 *** 需要将模型转化为本地数据主要是业务预算模型，生产采购预算模型,财务预算模型 ,人力预算模型 复制到本地 
 *** 下载C业务实现 自动化
-*** how to generageTargetId 
+** how to generageTargetId 
 #+BEGIN_SRC js
 function generateGUID() {
   return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (e) => {
@@ -31,7 +31,26 @@ function generateGUID() {
 //taskId : "exportObj_bf8972c4-4149-4035-b4aa-9013e4c58baf"
 
 #+END_SRC
+** 获取报表关联执行脚本 接口
+https://fone.risen.com:80/api/ScheduleTask/getRelateScheduleTask/61a84130700086b8eed9b6f7
 ** 文档系统建立
    文档系统选择docsify
+** 生产预算成本 学习
+*** 将所有报表整理成为自己需要的东西
+1. 模型
+2. 模型成员
 
 
+预算学习计划
+1. 预算相关知识的学习 和 fone 相关系统学习。
+首先将所有报表中出现的维度成员 做成一张表格。了解模型和模型维度的关系。建立知识图谱
+生产预算 生产预算成本学习。 其中有一个需求是将分子公司汇总的成本需要和组件和电池片一样有每瓦成本 （本月）
+整理报表关联执行的脚本
+fone系统学习。掌握所有接口信息。为以后fone系统一些缺陷做优化。
+2. 技术学习计划
+插件知识学习
+文档整理。分开开发文档。和使用手册。规划中
+
+
+其他
+财务自动化支持 自动化软件制作和一些简单的excel自动化教学。需求还没有成型
