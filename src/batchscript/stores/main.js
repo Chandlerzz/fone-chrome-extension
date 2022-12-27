@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia'
+import { createPinia } from 'pinia'
 
+export const pinia = createPinia();
 // main is the name of the store. It is unique across your application
 // and will appear in devtools
 export const useMainStore = defineStore('main', {

@@ -37,6 +37,10 @@
  import { ElMessage } from 'element-plus'
  import { useMainStore } from '../../stores/main.js'
  import { storeToRefs } from 'pinia'
+ import getFContentsAndFavorites from '../../../api/getFcontentsAndFavorites.js'
+ import foneApi from '../../../api/api.js'
+ import GetFContent from '../../../api/getFContnet.js'
+ import ExcuteSxriptText from '../../../api/ExcuteScriptText.js'
  // -------------------------------------------------------------------------------------
 
  const store = useMainStore()
@@ -61,28 +65,19 @@
      return currencyTransformScripts
  })
 
- getJson1(
-     baseUrl.value + 'api/FContent/getFContentsAndFavorites',
-     'POST',
-     {},
-     (request) => {
-         setHeaders(request, headers.value)
-     },
-     (data) => {
-         data = JSON.parse(data)
-         let result = data.data.fContents
-         findScript(result, (item) => {
-             if(item.name.endsWith("预算模型脚本"))
-             {
-                 FContents.value.push(item)
-             }
-         })
-         result = data.data.fContentsOfSharedFolder
-         findModel(result,(item) => {
-             Models.push(item)
-         })
-     },
- )
+ getFContentsAndFavorites({}).then((data) => {
+     let result = data.data.fContents
+     findScript(result, (item) => {
+         if(item.name.endsWith("预算模型脚本"))
+         {
+             FContents.value.push(item)
+         }
+     })
+     result = data.data.fContentsOfSharedFolder
+     findModel(result,(item) => {
+         Models.push(item)
+     })
+ })
 
  // -----------------------------------------------------------------------------------
  // function
@@ -119,9 +114,9 @@
  }
  async function run() {
      emit('getHeaders')
+     let result = ""
      const tables = multipleSelection.value
      for (let item of tables) {
-         loading.value = true
          let name = item.name
          let fcontentid = FContents.value.find((el) => el.name === name)
          name = item.name.slice(0,-2);//脚本两个字排除
@@ -138,73 +133,52 @@
                  labels:[],
              }
          }
-         for (let i in dimensions){
-             getJson1(
-                 baseUrl.value + 'api/',
-                 'POST',
-                 {
-                     "action": "SOAPAdminGetDimensionMembers",
-                     "operation": "OLAP",
-                     "params": {
-                         "businessModel_goid": model.data,
-                         "dimension_int": i,
-                         "fContentId": model._id,
-                         "language": "zh-CN",
-                         "payload_string": "",
-                         "session_goid": headers.value['Ewaresoft-FOne-SessionId']
-                     }
-                 },
-                 (request) => {
-                     setHeaders(request, headers.value)
-                 },
-                 (data) => {
-                     data = JSON.parse(JSON.parse(data).data)
-                     const arr = data.members
-                     const type = dimensions[i].type
-                     getInputs(arr,type,(item) =>{
-                         inputs[i].inputs.push(item);
-                         inputs[i].labels.push(item.name);
-                     })
-                 },
-                 false,
-             )
-         }
+         result = await foneApi({
+             "action": "SOAPAdminGetDimensionMembers",
+             "operation": "OLAP",
+             "params": {
+                 "businessModel_goid": model.data,
+                 "dimension_int": '0',
+                 "fContentId": model._id,
+                 "language": "zh-CN",
+                 "payload_string": "",
+                 "session_goid": headers.value['Ewaresoft-FOne-SessionId']
+             }
+         })
+         result = JSON.parse(result.data)
+         const arr = result.members
+         const type = dimensions['0'].type
+         getInputs(arr,type,(item) =>{
+             inputs['0'].inputs.push(item);
+             inputs['0'].labels.push(item.name);
+         })
          //TODO 根据模型读取现有的数据来源和科目
          //将科目的数据输入型全部存到数据流中。
          //将数据来源的输入型分批写人到数据流分批执行。
          //先改写数据流再执行脚本
-         getJson1(
-             baseUrl.value + 'api/FContent/GetFContent',
-             'POST',
+         result = await GetFContent(
              {
                  appId: headers.value['ewaresoft-fone-applicationid'],
                  userId: headers.value['ewaresoft-fone-applicationuserid'],
                  from: 'userOpen',
                  _id: fcontentid._id,
-             },
-             (request) => {
-                 setHeaders(request, headers.value)
-             },
-             async (data) => {
-                 const fcontentid = FContents.value.find((el) => el.name === name + "脚本")
-                 const row = multipleSelection.value.find((el) => el.name === name + "脚本")
-                 data = JSON.parse(data).data
-                 data = JSON.parse(data.data)
-                 const source =inputs['0']
-                 let flag = 0
-                 let page = 1
-                 const target = {}
-                 while(flag < source.inputs.length){
-                     row['account'] = source.inputs[flag].nodeId
-                     flag = flag + page
-                     await doOne(fcontentid, data, row)
-                     await sleep(1000)
-
-                 }
-                 loading.value = false
-             },
-             false,
+             }
          )
+         const row = item;
+         result = result.data
+         result = JSON.parse(result.data)
+         const source =inputs['0']
+         let flag = 0
+         let page = 1
+         const target = {}
+         while(flag < source.inputs.length){
+             loading.value = true
+             row['account'] = source.inputs[flag].nodeId
+             flag = flag + page
+             await doOne(fcontentid, result, row)
+             await sleep(1000)
+             loading.value = false
+         }
          await sleep(1000)
      }
  }
@@ -236,22 +210,12 @@
      script = script + '\n'
      scriptText = script + scriptText
      body.scriptText = scriptText
-     getJson1(
-         baseUrl.value + 'api/Script/ExcuteScriptText',
-         'POST',
-         body,
-         (request) => {
-             setHeaders(request, headers.value)
-         },
-         (data) => {
-             tableData.value.find((item) => item._id === row._id).message = data
-             ElMessage({
-                 message: data,
-                 type: 'success',
-             })
-         },
-         false,
-     )
+     let result =await ExcuteSxriptText(body)
+     row.message = result.data
+     ElMessage({
+         message: result.data,
+         type: 'success',
+     })
  }
 </script>
 
