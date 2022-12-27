@@ -4,7 +4,6 @@ import axios from "axios";
 import { ElMessage } from 'element-plus';
 import { useMainStore,pinia } from '../batchscript/stores/main.js';
 const store = useMainStore(pinia);
-store.getDataFromLocalStorage();
 const baseUrl = store.baseUrl;
 const headers = store.headers;
 
