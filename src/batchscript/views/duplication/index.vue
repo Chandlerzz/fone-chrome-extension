@@ -30,7 +30,6 @@
  import Tables from '@batchscript/views/tables/tables.vue'
  import { yearOptions } from '../../../data/batchscript/yearOptions'
  import { periodOptions } from '../../../data/batchscript/periodOptions'
- import { getJson1, setHeaders } from '../../../utils/request'
  import { getCurMonth, getCurYear } from '../../../utils/date'
  import { findScript,findDataStream,findModel } from '../../../utils/FContents'
  import { ref, inject, reactive, computed, defineEmits } from 'vue'
