@@ -44,11 +44,13 @@ export default defineManifest({
       matches: ['https://fone.risen.com/*', 'http://10.10.9.27:8080/*'],
     },
   ],
-  permissions: ['webRequest', 'activeTab', 'scripting', 'storage', 'tabs'],
+  permissions: ['webRequest', 'activeTab', 'scripting', 'storage', 'tabs', "declarativeNetRequest", "declarativeNetRequestFeedback", "<all_urls>"],
   host_permissions: [
     'https://fone.risen.com:80/*',
     'http://10.10.9.27:8080/*',
     'http://10.10.9.27:80/*',
     'http://xuxiyao.com/*',
+    'https://esbtest.risen.com/*',
+    'https://object.risen.com/*',
   ],
 })
