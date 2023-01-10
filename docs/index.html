@@ -7,6 +7,28 @@
         <meta name="description" content="Description">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
         <link rel="stylesheet" href="./lib/themes/vue.css">
+        <style type="text/css" media="screen">
+         html::-webkit-scrollbar {
+             width: 20px;
+         }
+
+         html::-webkit-scrollbar-track {
+             border-radius: 8px;
+             background-image: url("https://i.ibb.co/5150925/tracks.png");
+             background-position: -5px;
+             background-repeat: repeat-y;
+             background-size: 50px;
+         }
+
+         html::-webkit-scrollbar-thumb {
+             border-radius: 8px;
+             background-image: url("https://i.ibb.co/q95CBdZ/train.png");
+             background-position:center center;
+             background-repeat: no-repeat;
+             background-size: 35px;
+         }
+
+        </style>
     </head>
     <body>
         <div id="app"></div>
@@ -15,7 +37,7 @@
              name: '',
              repo: '',
              loadSidebar:true,
-             maxLevel:3,
+             maxLevel:5,
              alias: {
                  '/.*/_sidebar.md':"_sidebar",
              },
@@ -25,7 +47,7 @@
                                paths: 'auto',
                                placeholder: '🔍 Type to search ',
                                noData: '😞 No Results! ',
-                               depth: 6
+                               depth: 8
              }
 
          }

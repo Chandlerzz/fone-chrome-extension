@@ -2,7 +2,7 @@ import jQuery from "jquery";
 window.jQuery = window.$ = jQuery;
 import axios from "axios";
 import { ElMessage } from 'element-plus';
-import { useMainStore,pinia } from '../batchscript/stores/main.js';
+import { useMainStore,pinia } from '../stores/main.js';
 const store = useMainStore(pinia);
 const baseUrl = store.baseUrl;
 const headers = store.headers;
@@ -12,7 +12,6 @@ const service = axios.create({
   baseURL: baseUrl, // api的base_url
   timeout: 600000, // 请求超时时间
 });
-
 // request拦截器
 service.interceptors.request.use(
   (config) => {

@@ -34,7 +34,7 @@
  import { findScript,findDataStream,findModel } from '../../../utils/FContents'
  import { ref, inject, reactive, computed, defineEmits } from 'vue'
  import { ElMessage } from 'element-plus'
- import { useMainStore } from '../../stores/main.js'
+ import { useMainStore } from '../../../stores/main.js'
  import { storeToRefs } from 'pinia'
  import getFContentsAndFavorites from '../../../api/getFcontentsAndFavorites.js'
  import foneApi from '../../../api/api.js'

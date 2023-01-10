@@ -1,9 +1,12 @@
 <script setup>
- import { ref } from 'vue'
+ import { ref,computed } from 'vue'
  import sidebar from './views/sidebar/index.vue'
 
  const cont = ref('')
- const show = ref(true)
+ const iframeurl = computed(() => {
+     let url = "https://esbtest.risen.com/dev/v1/fone_documentation#"
+     return url
+ })
  const extensionId = localStorage.getItem('extensionId')
  const batchscriptUrl = 'chrome-extension://' + extensionId + '/batchscript.html'
  localStorage.setItem('origin', location.origin)
@@ -16,11 +19,13 @@
      },
      {
          name: 'batchscript',
-         label: '批量脚本',
+         label: '币种转换',
          type: 'link',
          url: batchscriptUrl,
      },
  ]
+
+
  function clickItem(item) {
      const name = item.currentTarget.getAttribute('name')
      const type = item.currentTarget.getAttribute('type')
@@ -63,7 +68,7 @@
                 title="Inline Frame Example"
                 width="400"
                 height="400"
-                src="https://esbtest.risen.com/dev/v1/fone_documentation#/原理/币种转换">
+                :src = "iframeurl">
         </iframe>
     </sidebar>
     <ul id = "menu">
@@ -102,6 +107,12 @@
      position:absolute;
      top:0;
      left:100px;
+     border-top-left-radius: 8px;
+     border-top-right-radius: 8px;
+     border-bottom-left-radius: 8px;
+     border-bottom-right-radius: 8px;
+     border-top: 0;
+     box-shadow: 0 1px 4px 0 rgba(0,0,0,.37);
  }
 </style>
 

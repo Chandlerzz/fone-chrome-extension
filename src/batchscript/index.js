@@ -6,7 +6,7 @@ import element from "element-plus";
 import "element-plus/dist/index.css";
 import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 import { createPinia } from "pinia";
-import { useMainStore,pinia } from '../batchscript/stores/main.js';
+import { useMainStore,pinia } from '../stores/main.js';
 import jQuery from "jquery";
 window.jQuery = window.$ = jQuery;
 

@@ -80,8 +80,19 @@ risen.id = "risen";
 risen.classList = ["risen-unshow"];
 document.body.appendChild(risen);
 
-
 //打包后将插件中的js和css写入fone build.py
 
+chrome.runtime.onMessage.addListener(
+  function (request, sender, sendResponse) {
+    if(request.data)
+    {
+      const data = JSON.parse(request.data);
+      id = data.id;
+    }
+    if (request.greeting == "hello") {
+      sendResponse({ farewell: "goodbye" });
+    }
+  },
+);
 
 export {};

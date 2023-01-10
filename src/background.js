@@ -47,22 +47,28 @@ chrome.runtime.onMessage.addListener((msg) => {
   }
 });
 
-function onBeforeRequest(details) {}
+function onBeforeRequest(details) {
+  const tabId = details.tabId;
+  if (details.url.endsWith("GetFContent")) {
+    const uint8array = new Uint8Array(details.requestBody.raw[0].bytes);
+    const data = String.fromCharCode.apply(null, uint8array);
+    chrome.tabs.sendMessage(
+      tabId,
+      { data: data },
+      function (response) {
+      },
+    );
+  }
+}
 function onBeforeSendHeaders(details) {
-  let requestHeaders = details.requestHeaders;
-  let test = {
-    "name": "Cookie",
-    "value": "test",
-  };
-  requestHeaders.push(test);
-  return { requestHeaders: requestHeaders };
 }
 
 chrome.webRequest.onBeforeRequest.addListener(
   onBeforeRequest,
   {
     urls: [
-      "https://esbtest.risen.com/dev/v1/fone_documentation",
+      "http://10.10.9.27/api/FContent/GetFContent",
+      "https://fone.risen.com:80/api/FContent/GetFContent",
     ],
   },
   ["requestBody"],
@@ -71,7 +77,10 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
   onBeforeSendHeaders,
   {
     urls: [
-      "https://esbtest.risen.com/dev/v1/fone_documentation",
+      "http://10.10.9.27/api/FContent/getFContentsAndFavorites",
+      "http://10.10.9.27/api/FContent/GetFContent",
+      "https://fone.risen.com:80/api/FContent/getFContentsAndFavorites",
+      "https://fone.risen.com:80/api/FContent/GetFContent",
     ],
   },
   ["requestHeaders"],
